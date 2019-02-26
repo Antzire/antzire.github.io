@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/robot-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/robot-icon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CentOS,Oracle,CDB,PDB,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Oracle 12c数据库安装和基本操作详解，里面的内容涉及到了Linux操作系统，Oracle数据库相关操作，以供其他同学的学习参考，若有不足之处请邮件联系我。这篇文章主要为如何在Linux系统上安装一套Oracle 12c单节点的数据库，以及对12c这个版本的一些操作和理解。Oracle在12c的版本引入了一个非常重要的概念-多租户，12c中的c是指Cloud，从传统的Grid，向Cloud方">
+<meta name="keywords" content="CentOS,Oracle,CDB,PDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux Install Oracle 12c">
+<meta property="og:url" content="http://yoursite.com/2019/02/18/cjshpxipm0008k0mgiclksu19/index.html">
+<meta property="og:site_name" content="Ethan&#39;s Blog">
+<meta property="og:description" content="Oracle 12c数据库安装和基本操作详解，里面的内容涉及到了Linux操作系统，Oracle数据库相关操作，以供其他同学的学习参考，若有不足之处请邮件联系我。这篇文章主要为如何在Linux系统上安装一套Oracle 12c单节点的数据库，以及对12c这个版本的一些操作和理解。Oracle在12c的版本引入了一个非常重要的概念-多租户，12c中的c是指Cloud，从传统的Grid，向Cloud方">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-25T14:28:05.365Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux Install Oracle 12c">
+<meta name="twitter:description" content="Oracle 12c数据库安装和基本操作详解，里面的内容涉及到了Linux操作系统，Oracle数据库相关操作，以供其他同学的学习参考，若有不足之处请邮件联系我。这篇文章主要为如何在Linux系统上安装一套Oracle 12c单节点的数据库，以及对12c这个版本的一些操作和理解。Oracle在12c的版本引入了一个非常重要的概念-多租户，12c中的c是指Cloud，从传统的Grid，向Cloud方">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/18/cjshpxipm0008k0mgiclksu19/">
+
+
+
+
+
+  <title>Linux Install Oracle 12c | Ethan's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ethan's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/18/cjshpxipm0008k0mgiclksu19/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ethan Fang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/litten.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ethan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux Install Oracle 12c</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-18T21:13:30+08:00">
+                2019-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Oracle/" itemprop="url" rel="index">
+                    <span itemprop="name">Oracle</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Oracle 12c数据库安装和基本操作详解，里面的内容涉及到了Linux操作系统，Oracle数据库相关操作，以供其他同学的学习参考，若有不足之处请邮件联系我。这篇文章主要为如何在Linux系统上安装一套Oracle 12c单节点的数据库，以及对12c这个版本的一些操作和理解。Oracle在12c的版本引入了一个非常重要的概念-<strong>多租户</strong>，12c中的c是指Cloud，从传统的Grid，向Cloud方向演变。后续安装完成后会对12c的<strong>多租户</strong>、<strong>容器库</strong>、<strong>可插拔库</strong>等名词和概念进行一些说明。</p>
+<h3 id="1-资源描述"><a href="#1-资源描述" class="headerlink" title="1. 资源描述"></a>1. 资源描述</h3><ul>
+<li><a href="https://wiki.centos.org/Download" target="_blank" rel="noopener">CentOS 6.10</a> 操作系统可选择6.x系列其他的版本</li>
+<li><a href="https://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html" target="_blank" rel="noopener">Oracle 12.2.0.1</a> 点击链接找到对应操作系统的版本下载即可</li>
+<li><a href="https://www.virtualbox.org/" target="_blank" rel="noopener">Virtual Box 5.2.22</a> 虚拟机软件可选择最新版，建议使用5系列，比较稳定</li>
+<li><a href="https://www.realvnc.com/en/connect/download/viewer/" target="_blank" rel="noopener">VNC Viewer 6.18</a> 远程桌面工具，可选用最新版</li>
+<li><a href="https://www.netsarang.com/en/xshell/" target="_blank" rel="noopener">Xshell 5</a> 远程终端工具5系列官网已经不提供下载了，可选择6系列，有使用限制，单个窗口最大可开4个标签，可选择其他终端工具比如<a href="https://putty.org/" target="_blank" rel="noopener">Putty</a>，<a href="https://mobaxterm.mobatek.net/" target="_blank" rel="noopener">MobaXterm</a>等</li>
+</ul>
+<h3 id="2-操作系统检查与配置"><a href="#2-操作系统检查与配置" class="headerlink" title="2. 操作系统检查与配置"></a>2. 操作系统检查与配置</h3><ul>
+<li><p>查看操作系统版本</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># cat /etc/redhat-release</span></span><br><span class="line">CentOS release 6.10 (Final)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看内存，swap</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 内存建议1G以上，swap建议4G以上否则在安装检查的时候会报错</span></span><br><span class="line">[root@localhost ~]<span class="comment"># free -m</span></span><br><span class="line">             total       used       free     shared    buffers     cached</span><br><span class="line">Mem:          1878        702       1175          2         52        378</span><br><span class="line">-/+ buffers/cache:        270       1607</span><br><span class="line">Swap:         4095          0       4095</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>调整swap大小</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建分区，位置可自定，bs参数为块大小，count参数为个数</span></span><br><span class="line">[root@localhost ~]<span class="comment"># dd if=/dev/zero of=/home/swap bs=1M count=2048</span></span><br><span class="line">2048+0 records <span class="keyword">in</span></span><br><span class="line">2048+0 records out</span><br><span class="line">2147483648 bytes (2.1 GB) copied, 2.72688 s, 788 MB/s</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将分区变成swap分区</span></span><br><span class="line">[root@localhost ~]<span class="comment"># mkswap /home/swap</span></span><br><span class="line">mkswap: /home/swap: warning: don<span class="string">'t erase bootbits sectors</span></span><br><span class="line"><span class="string">        on whole disk. Use -f to force.</span></span><br><span class="line"><span class="string">Setting up swapspace version 1, size = 2097148 KiB</span></span><br><span class="line"><span class="string">no label, UUID=21751eac-33ad-4fe0-8b13-3bccc34973b9</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 使分区生效</span></span><br><span class="line"><span class="string">[root@localhost ~]# swapon /home/swap</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 修改fstab添加开机启动</span></span><br><span class="line"><span class="string">[root@localhost ~]# vi /etc/fstab</span></span><br><span class="line"><span class="string">/home/swap              swap                    swap    defaults        0 0</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看磁盘空间</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Oracle安装目录的可用空间建议15G以上，安装操作系统磁盘建议32G以上</span></span><br><span class="line">[root@localhost ~]<span class="comment"># df -h</span></span><br><span class="line">Filesystem            Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/mapper/VolGroup-LogVol00</span><br><span class="line">                       28G  7.3G   19G  29% /</span><br><span class="line">tmpfs                 940M   76K  939M   1% /dev/shm</span><br><span class="line">/dev/sda1             190M   40M  141M  22% /boot</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置IP地址</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编辑ifcfg-eth0</span></span><br><span class="line">[root@localhost ~]<span class="comment"># vi /etc/sysconfig/network-scripts/ifcfg-eth0</span></span><br><span class="line"><span class="comment"># 参照下列示例修改后六行，Virtual Box的虚拟网关为192.168.56.1</span></span><br><span class="line"><span class="comment"># 在host-only模式下你的IP地址需要在192.168.56这个网段</span></span><br><span class="line"><span class="comment"># 在生产环境下，数据库是和交换机连在一起的，具体的IP需要和应用在同</span></span><br><span class="line"><span class="comment"># 一个网段或者VLAN中</span></span><br><span class="line">DEVICE=eth0</span><br><span class="line">HWADDR=08:00:27:7F:BA:FD</span><br><span class="line">TYPE=Ethernet</span><br><span class="line">UUID=0948b812-ae70-4159-9564-bde690e7befa</span><br><span class="line">ONBOOT=yes</span><br><span class="line">NM_CONTROLLED=yes</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">IPADDR=192.168.56.104</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=192.168.56.1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改network</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改主机名，一般建议为：应用-类型版本的模式，这样方便的终端登陆时候，</span></span><br><span class="line"><span class="comment"># 看到主机名就知道这台服务器的作用，以及为哪个应用提供服务，如果上面有</span></span><br><span class="line"><span class="comment"># 多个库，建议为mpp(Multi Application)-类型版本的模式</span></span><br><span class="line"><span class="comment"># 编辑network配置文件</span></span><br><span class="line">[root@localhost ~]<span class="comment"># vi /etc/sysconfig/network</span></span><br><span class="line"><span class="comment"># 将localhost.localdomain修改为自定的主机名</span></span><br><span class="line">NETWORKING=yes</span><br><span class="line">HOSTNAME=app-db12c</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改hosts</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vi /etc/hosts</span></span><br><span class="line">192.168.56.104  app-db12c</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改防火墙</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 关闭防火墙</span></span><br><span class="line">[root@localhost ~]<span class="comment"># service iptables stop</span></span><br><span class="line"><span class="comment"># 禁止开机启动防火墙</span></span><br><span class="line">[root@localhost ~]<span class="comment"># chkconfig iptables off</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改selinux</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 关闭Linux增强，编辑selinx配置文件</span></span><br><span class="line">[root@localhost ~]<span class="comment"># vi /etc/sysconfig/selinux</span></span><br><span class="line"><span class="comment"># 将SELINUX=enforcing修改SELINUX=disabled</span></span><br><span class="line"><span class="comment"># This file controls the state of SELinux on the system.</span></span><br><span class="line"><span class="comment"># SELINUX= can take one of these three values:</span></span><br><span class="line"><span class="comment">#     enforcing - SELinux security policy is enforced.</span></span><br><span class="line"><span class="comment">#     permissive - SELinux prints warnings instead of enforcing.</span></span><br><span class="line"><span class="comment">#     disabled - No SELinux policy is loaded.</span></span><br><span class="line">SELINUX=disabled</span><br><span class="line"><span class="comment"># SELINUXTYPE= can take one of these two values:</span></span><br><span class="line"><span class="comment">#     targeted - Targeted processes are protected,</span></span><br><span class="line"><span class="comment">#     mls - Multi Level Security protection.</span></span><br><span class="line">SELINUXTYPE=targeted</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="3-创建用户组及用户"><a href="#3-创建用户组及用户" class="headerlink" title="3. 创建用户组及用户"></a>3. 创建用户组及用户</h3><ul>
+<li><p>创建用户组</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@app-db12c ~]<span class="comment"># groupadd oinstall</span></span><br><span class="line">[root@app-db12c ~]<span class="comment"># groupadd dba</span></span><br><span class="line">[root@app-db12c ~]<span class="comment"># groupadd oper</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建用户并设置密码</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@app-db12c ~]<span class="comment"># useradd -g oinstall -G dba,oper oracle</span></span><br><span class="line">[root@app-db12c ~]<span class="comment"># passwd oracle</span></span><br><span class="line">Changing password <span class="keyword">for</span> user oracle.</span><br><span class="line">New password:</span><br><span class="line">BAD PASSWORD: it is based on a dictionary word</span><br><span class="line">BAD PASSWORD: is too simple</span><br><span class="line">Retype new password:</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>检查用户组及用户</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@app-db12c ~]<span class="comment"># su - oracle</span></span><br><span class="line">[oracle@app-db12c ~]$ id</span><br><span class="line">uid=500(oracle) gid=500(oinstall) groups=500(oinstall),501(dba),502(oper)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="4-创建安装目录"><a href="#4-创建安装目录" class="headerlink" title="4. 创建安装目录"></a>4. 创建安装目录</h3><ul>
+<li><p>创建Oracle软件安装目录</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@app-db12c ~]<span class="comment"># mkdir -p /u01/app/oracle</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更改属组并授权</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@app-db12c ~]<span class="comment"># chown -R oracle:oinstall /u01/</span></span><br><span class="line">[root@app-db12c ~]<span class="comment"># chmod -R 775 /u01/app/oracle/</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>谢谢打赏～</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Ethan Fang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
+          
+            <a href="/tags/Oracle/" rel="tag"># Oracle</a>
+          
+            <a href="/tags/CDB/" rel="tag"># CDB</a>
+          
+            <a href="/tags/PDB/" rel="tag"># PDB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/18/cjskettz8000051dhr3gsgy5c/" rel="next" title="Linux Install Oracle 11g">
+                <i class="fa fa-chevron-left"></i> Linux Install Oracle 11g
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/18/cjshpxiph0004k0mgtwr7uld4/" rel="prev" title="Linux Install Oracle 11g RAC">
+                Linux Install Oracle 11g RAC <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/litten.png" alt="Ethan Fang">
+            
+              <p class="site-author-name" itemprop="name">Ethan Fang</p>
+              <p class="site-description motion-element" itemprop="description">数据不备份，丢失泪两行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cnethan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:cnfong@outlook.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-资源描述"><span class="nav-number">1.</span> <span class="nav-text">1. 资源描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-操作系统检查与配置"><span class="nav-number">2.</span> <span class="nav-text">2. 操作系统检查与配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-创建用户组及用户"><span class="nav-number">3.</span> <span class="nav-text">3. 创建用户组及用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-创建安装目录"><span class="nav-number">4.</span> <span class="nav-text">4. 创建安装目录</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ethan Fang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

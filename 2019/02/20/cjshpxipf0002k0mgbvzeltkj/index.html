@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/robot-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/robot-icon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CentOS,Oracle,OGG,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="GoldenGate公司是专注于数据同步领域，是实现数据同步技术的领导者，在2009年被Oracle公司收购，GoldenGate公司的领先技术就是逐渐为大家所知的交易数据管理Transactional Data Management (TDM)，可以在异构的IT基础结构之间实现大量数据的秒一级的数据捕捉、转换和投递。GoldenGate可以支持几乎所有常用操作系统和数据库平台。下面我们进行Ora">
+<meta name="keywords" content="CentOS,Oracle,OGG">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux Install Oracle11g GoldenGate">
+<meta property="og:url" content="http://yoursite.com/2019/02/20/cjshpxipf0002k0mgbvzeltkj/index.html">
+<meta property="og:site_name" content="Ethan&#39;s Blog">
+<meta property="og:description" content="GoldenGate公司是专注于数据同步领域，是实现数据同步技术的领导者，在2009年被Oracle公司收购，GoldenGate公司的领先技术就是逐渐为大家所知的交易数据管理Transactional Data Management (TDM)，可以在异构的IT基础结构之间实现大量数据的秒一级的数据捕捉、转换和投递。GoldenGate可以支持几乎所有常用操作系统和数据库平台。下面我们进行Ora">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://pngqbat1e.bkt.clouddn.com/static/images/ora-inst-ogg-01.png">
+<meta property="og:image" content="http://pngqbat1e.bkt.clouddn.com/static/images/ora-inst-ogg-02.png">
+<meta property="og:image" content="http://pngqbat1e.bkt.clouddn.com/static/images/ora-inst-ogg-03.png">
+<meta property="og:image" content="http://pngqbat1e.bkt.clouddn.com/static/images/ora-inst-ogg-04.png">
+<meta property="og:updated_time" content="2019-02-26T15:14:11.215Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux Install Oracle11g GoldenGate">
+<meta name="twitter:description" content="GoldenGate公司是专注于数据同步领域，是实现数据同步技术的领导者，在2009年被Oracle公司收购，GoldenGate公司的领先技术就是逐渐为大家所知的交易数据管理Transactional Data Management (TDM)，可以在异构的IT基础结构之间实现大量数据的秒一级的数据捕捉、转换和投递。GoldenGate可以支持几乎所有常用操作系统和数据库平台。下面我们进行Ora">
+<meta name="twitter:image" content="http://pngqbat1e.bkt.clouddn.com/static/images/ora-inst-ogg-01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/20/cjshpxipf0002k0mgbvzeltkj/">
+
+
+
+
+
+  <title>Linux Install Oracle11g GoldenGate | Ethan's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ethan's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/20/cjshpxipf0002k0mgbvzeltkj/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ethan Fang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/litten.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ethan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux Install Oracle11g GoldenGate</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-20T11:20:15+08:00">
+                2019-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GoldenGate/" itemprop="url" rel="index">
+                    <span itemprop="name">GoldenGate</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>GoldenGate公司是专注于数据同步领域，是实现数据同步技术的领导者，在2009年被Oracle公司收购，GoldenGate公司的领先技术就是逐渐为大家所知的交易数据管理Transactional Data Management (TDM)，可以在异构的IT基础结构之间实现大量数据的秒一级的数据捕捉、转换和投递。GoldenGate可以支持几乎所有常用操作系统和数据库平台。下面我们进行Oracle GoldenGate简称OGG的安装，它的安装非常简单，前提是已经安装了对应版本的数据库，目前我使用的OGG版本支持Oracle 11g、12c两个版本，OGG的数据复制模式、配置过程在后续的文章中更新。</p>
+<h3 id="1-资源描述"><a href="#1-资源描述" class="headerlink" title="1. 资源描述"></a>1. 资源描述</h3><ul>
+<li><a href="https://www.oracle.com/technetwork/cn/middleware/goldengate/downloads/index.html" target="_blank" rel="noopener">GoldenGate</a> 组件版本选择为12.3.0.1</li>
+<li><a href="http://rpmfind.net/linux/epel/6/x86_64/Packages/r/rlwrap-0.42-1.el6.x86_64.rpm" target="_blank" rel="noopener">rlwrap</a> 可以解决Linux下sqlplus提供历史命令浏览、删除错误输入等功能</li>
+</ul>
+<h3 id="2-环境准备"><a href="#2-环境准备" class="headerlink" title="2. 环境准备"></a>2. 环境准备</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>主机名</th>
+<th>SID</th>
+<th>IP地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>源端</td>
+<td>ogg-src</td>
+<td>prod1</td>
+<td>192.168.56.103</td>
+</tr>
+<tr>
+<td>目标端</td>
+<td>ogg-trg</td>
+<td>prod2</td>
+<td>192.168.56.104</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-目录及配置"><a href="#3-目录及配置" class="headerlink" title="3. 目录及配置"></a>3. 目录及配置</h3><ul>
+<li><p>创建安装目录</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 源端创建目录</span></span><br><span class="line">mkdir -p /u01/app/oracle/product/11.2.0/oggcore_1</span><br><span class="line"><span class="comment"># 目标端创建目录</span></span><br><span class="line">mkdir -p /u01/app/oracle/product/11.2.0/oggcore_1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置环境变量<br>每次配置完环境变量别忘了执行<code>source .bash_profile</code>使配置生效</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 源端添加环境变量</span></span><br><span class="line">[oracle@ogg-src ~]$ vi .bash_profile</span><br><span class="line"><span class="built_in">export</span> ORACLE_BASE=/u01/app/oracle</span><br><span class="line"><span class="built_in">export</span> ORACLE_HOME=<span class="variable">$ORACLE_BASE</span>/product/11.2.0/dbhome_1</span><br><span class="line"><span class="built_in">export</span> ORACLE_SID=prod1</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$ORACLE_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> OGG_HOME=/u01/app/oracle/product/11.2.0/oggcore_1</span><br><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=<span class="variable">$ORACLE_HOME</span>/lib:<span class="variable">$OGG_HOME</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 目标端添加环境变量</span></span><br><span class="line">[oracle@ogg-trg ~]$ vi .bash_profile</span><br><span class="line"><span class="built_in">export</span> ORACLE_BASE=/u01/app/oracle</span><br><span class="line"><span class="built_in">export</span> ORACLE_HOME=<span class="variable">$ORACLE_BASE</span>/product/11.2.0/dbhome_1</span><br><span class="line"><span class="built_in">export</span> ORACLE_SID=prod2</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$ORACLE_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> OGG_HOME=/u01/app/oracle/product/11.2.0/oggcore_1</span><br><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=<span class="variable">$ORACLE_HOME</span>/lib:<span class="variable">$OGG_HOME</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="4-开始安装"><a href="#4-开始安装" class="headerlink" title="4. 开始安装"></a>4. 开始安装</h3><ul>
+<li><p>解压安装包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@ogg-src home]<span class="comment"># unzip 123014_fbo_ggs_Linux_x64_shiphome.zip</span></span><br><span class="line"><span class="comment"># VNC Viewer连接服务器操作</span></span><br><span class="line">[oracle@ogg-src ~]$ <span class="built_in">cd</span> /home/fbo_ggs_Linux_x64_shiphome/Disk1/</span><br><span class="line">[oracle@ogg-src Disk1]$ ./runInstaller</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>选择数据库版本对应的GoldenGate版本</p>
+<img src="http://pngqbat1e.bkt.clouddn.com/static/images/ora-inst-ogg-01.png"></li>
+<li>指定安装目录<img src="http://pngqbat1e.bkt.clouddn.com/static/images/ora-inst-ogg-02.png"></li>
+<li>汇总信息<img src="http://pngqbat1e.bkt.clouddn.com/static/images/ora-inst-ogg-03.png"></li>
+<li>安装过程<img src="http://pngqbat1e.bkt.clouddn.com/static/images/ora-inst-ogg-04.png"></li>
+<li><p>目标端安装步骤同上</p>
+</li>
+<li><p>配置OGG快捷命令和回写<br>配置快捷方式和回写需要安装readline和rlwrap两个依赖包，readline系统光盘里有，使用<code>yum</code>命令安装即可，rlwrap包需要下载使用<code>rpm -ivh rlwrap-0.42-1.el6.x86_64.rpm</code>命令安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> ggsci=<span class="string">'rlwrap /u01/app/oracle/product/11.2.0/oggcore_1/ggsci'</span></span><br><span class="line">[oracle@ogg-src ~]$ <span class="built_in">which</span> ggsci</span><br><span class="line"><span class="built_in">alias</span> ggsci=<span class="string">'rlwrap /u01/app/oracle/product/11.2.0/oggcore_1/ggsci'</span></span><br><span class="line">        /usr/bin/rlwrap</span><br><span class="line">        </span><br><span class="line"><span class="comment"># 目标端添加并验证</span></span><br><span class="line"><span class="built_in">alias</span> ggsci=<span class="string">'rlwrap /u01/app/oracle/product/11.2.0/oggcore_1/ggsci'</span></span><br><span class="line">[oracle@ogg-trg ~]$ <span class="built_in">which</span> ggsci</span><br><span class="line"><span class="built_in">alias</span> ggsci=<span class="string">'rlwrap /u01/app/oracle/product/11.2.0/oggcore_1/ggsci'</span></span><br><span class="line">        /usr/bin/rlwrap</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="5-测试"><a href="#5-测试" class="headerlink" title="5. 测试"></a>5. 测试</h3><ul>
+<li><p>源端</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[oracle@ogg-src ~]$ ggsci</span><br><span class="line"></span><br><span class="line">Oracle GoldenGate Command Interpreter <span class="keyword">for</span> Oracle</span><br><span class="line">Version 12.3.0.1.4 OGGCORE_12.3.0.1.0_PLATFORMS_180415.0359_FBO</span><br><span class="line">Linux, x64, 64bit (optimized), Oracle 11g on Apr 15 2018 21:16:09</span><br><span class="line">Operating system character <span class="built_in">set</span> identified as UTF-8.</span><br><span class="line"></span><br><span class="line">Copyright (C) 1995, 2018, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">GGSCI (ogg-src) 1&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>目标端</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[oracle@ogg-trg ~]$ ggsci</span><br><span class="line"></span><br><span class="line">Oracle GoldenGate Command Interpreter <span class="keyword">for</span> Oracle</span><br><span class="line">Version 12.3.0.1.4 OGGCORE_12.3.0.1.0_PLATFORMS_180415.0359_FBO</span><br><span class="line">Linux, x64, 64bit (optimized), Oracle 11g on Apr 15 2018 21:16:09</span><br><span class="line">Operating system character <span class="built_in">set</span> identified as UTF-8.</span><br><span class="line"></span><br><span class="line">Copyright (C) 1995, 2018, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">GGSCI (ogg-trg) 1&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>谢谢打赏～</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Ethan Fang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
+          
+            <a href="/tags/Oracle/" rel="tag"># Oracle</a>
+          
+            <a href="/tags/OGG/" rel="tag"># OGG</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/19/cjshpxiu20018k0mg3vi5hyc4/" rel="next" title="Github+Hexo+Nodejs+Qiniu 搭建个人博客">
+                <i class="fa fa-chevron-left"></i> Github+Hexo+Nodejs+Qiniu 搭建个人博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/21/cjshpxipa0000k0mgky6kmss9/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/litten.png" alt="Ethan Fang">
+            
+              <p class="site-author-name" itemprop="name">Ethan Fang</p>
+              <p class="site-description motion-element" itemprop="description">数据不备份，丢失泪两行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cnethan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:cnfong@outlook.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-资源描述"><span class="nav-number">1.</span> <span class="nav-text">1. 资源描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-环境准备"><span class="nav-number">2.</span> <span class="nav-text">2. 环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-目录及配置"><span class="nav-number">3.</span> <span class="nav-text">3. 目录及配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-开始安装"><span class="nav-number">4.</span> <span class="nav-text">4. 开始安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-测试"><span class="nav-number">5.</span> <span class="nav-text">5. 测试</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ethan Fang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

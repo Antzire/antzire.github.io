@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="CentOS,Oracle,RAC,CDB,PDB,">
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="数据不备份，丢失泪两行">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ethan&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta name="description" content="这篇内容是关于12c Oracle Real Application Clusters (RAC) 基于两节点Linux操作系统的安装教程，RAC架构具有多节点负载工作，有效的提高计算能力，预防单点故障，提升业&amp;gt;务的连续性等特点。安装操作也相对较单节点复杂，我们在安装的过程中又可以接触到一些新的概念如：Grid、ASM、VIP、SCANIP等。操作内容供同学们学习参考，若有不足之处请邮件联系">
+<meta name="keywords" content="CentOS,Oracle,RAC,CDB,PDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux Install Oracle 12c RAC">
+<meta property="og:url" content="http://yoursite.com/2019/02/18/cjshpxipk0007k0mgq2667prq/index.html">
 <meta property="og:site_name" content="Ethan&#39;s Blog">
-<meta property="og:description" content="数据不备份，丢失泪两行">
+<meta property="og:description" content="这篇内容是关于12c Oracle Real Application Clusters (RAC) 基于两节点Linux操作系统的安装教程，RAC架构具有多节点负载工作，有效的提高计算能力，预防单点故障，提升业&amp;gt;务的连续性等特点。安装操作也相对较单节点复杂，我们在安装的过程中又可以接触到一些新的概念如：Grid、ASM、VIP、SCANIP等。操作内容供同学们学习参考，若有不足之处请邮件联系">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-25T15:00:54.690Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ethan&#39;s Blog">
-<meta name="twitter:description" content="数据不备份，丢失泪两行">
+<meta name="twitter:title" content="Linux Install Oracle 12c RAC">
+<meta name="twitter:description" content="这篇内容是关于12c Oracle Real Application Clusters (RAC) 基于两节点Linux操作系统的安装教程，RAC架构具有多节点负载工作，有效的提高计算能力，预防单点故障，提升业&amp;gt;务的连续性等特点。安装操作也相对较单节点复杂，我们在安装的过程中又可以接触到一些新的概念如：Grid、ASM、VIP、SCANIP等。操作内容供同学们学习参考，若有不足之处请邮件联系">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/">
+  <link rel="canonical" href="http://yoursite.com/2019/02/18/cjshpxipk0007k0mgq2667prq/">
 
 
 
 
 
-  <title>归档 | Ethan's Blog</title>
+  <title>Linux Install Oracle 12c RAC | Ethan's Blog</title>
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -247,282 +249,205 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/18/cjshpxipk0007k0mgq2667prq/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ethan Fang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/litten.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ethan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Linux Install Oracle 12c RAC</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-18T21:13:52+08:00">
+                2019-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 7 篇日志。 继续努力。
-      </span>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Oracle-RAC/" itemprop="url" rel="index">
+                    <span itemprop="name">Oracle RAC</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/21/cjshpxipa0000k0mgky6kmss9/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-21T23:20:26+08:00" content="2019-02-21">
-          02-21
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/20/cjshpxipf0002k0mgbvzeltkj/" itemprop="url">
-              
-                <span itemprop="name">Linux Install Oracle11g GoldenGate</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-20T11:20:15+08:00" content="2019-02-20">
-          02-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/19/cjshpxiu20018k0mg3vi5hyc4/" itemprop="url">
-              
-                <span itemprop="name">Github+Hexo+Nodejs+Qiniu 搭建个人博客</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-19T10:46:21+08:00" content="2019-02-19">
-          02-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>这篇内容是关于12c Oracle Real Application Clusters (RAC) 基于两节点Linux操作系统<br>的安装教程，RAC架构具有多节点负载工作，有效的提高计算能力，预防单点故障，提升业&gt;务的连续性等特点。安装操作也相对较单节点复杂，我们在安装的过程中又可以接触到一些<br>新的概念如：Grid、ASM、VIP、SCANIP等。操作内容供同学们学习参考，若有不足之处请邮件联系我。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/18/cjshpxipk0007k0mgq2667prq/" itemprop="url">
-              
-                <span itemprop="name">Linux Install Oracle 12c RAC</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-18T21:13:52+08:00" content="2019-02-18">
-          02-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/18/cjshpxiph0004k0mgtwr7uld4/" itemprop="url">
-              
-                <span itemprop="name">Linux Install Oracle 11g RAC</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-18T21:13:45+08:00" content="2019-02-18">
-          02-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/18/cjshpxipm0008k0mgiclksu19/" itemprop="url">
-              
-                <span itemprop="name">Linux Install Oracle 12c</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-18T21:13:30+08:00" content="2019-02-18">
-          02-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/18/cjskettz8000051dhr3gsgy5c/" itemprop="url">
-              
-                <span itemprop="name">Linux Install Oracle 11g</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-18T21:03:14+08:00" content="2019-02-18">
-          02-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>谢谢打赏～</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Ethan Fang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
+          
+            <a href="/tags/Oracle/" rel="tag"># Oracle</a>
+          
+            <a href="/tags/RAC/" rel="tag"># RAC</a>
+          
+            <a href="/tags/CDB/" rel="tag"># CDB</a>
+          
+            <a href="/tags/PDB/" rel="tag"># PDB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/18/cjshpxiph0004k0mgtwr7uld4/" rel="next" title="Linux Install Oracle 11g RAC">
+                <i class="fa fa-chevron-left"></i> Linux Install Oracle 11g RAC
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/19/cjshpxiu20018k0mg3vi5hyc4/" rel="prev" title="Github+Hexo+Nodejs+Qiniu 搭建个人博客">
+                Github+Hexo+Nodejs+Qiniu 搭建个人博客 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -530,6 +455,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -769,6 +698,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
